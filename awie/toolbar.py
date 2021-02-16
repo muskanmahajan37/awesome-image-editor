@@ -4,20 +4,25 @@ from PyQt5.QtWidgets import QAction, QDockWidget, QActionGroup, QLabel, QToolBar
 
 
 class Tool(QAction):
-    def __init__(self, iconPath="", tip="", checked=False, shortcut=QKeySequence(), text="", parent=None, *args, **kwargs):
+    _ = QObject()
+    actGroup = QActionGroup(_)
+
+    def __init__(self, identifier='', iconPath="", tip="", checked=False, shortcut=QKeySequence(), text="", parent=None):
         super().__init__()
 
+        self.identifier = identifier
         self.setCheckable(True)
         self.setIcon(QIcon(iconPath))
-        self.setStatusTip(tip)
+        self.setStatusTip("Foo")
         self.setChecked(checked)
         self.setShortcut(shortcut)
         self.setText(text)
         self.setParent(parent)
+        self.setActionGroup(self.actGroup)
 
 
-tools = [Tool("./icons/move.png", "Move selected", True)]
-
+tools = [Tool("move", "./icons/move.png", "Move selected", True),
+         Tool("pan", "./icons/move.png", "Move selected")]
 
 
 class ToolBar(QToolBar):
@@ -30,8 +35,5 @@ class ToolBar(QToolBar):
         self.setContextMenuPolicy(Qt.PreventContextMenu)
         self.setStyleSheet("QToolBar { border: 0px }")
 
-        self.actGroup = QActionGroup(self)
-        self.actGroup.addAction(tools[0])
-
-        self.addActions(self.actGroup.actions())
+        self.addActions(tools)
 
