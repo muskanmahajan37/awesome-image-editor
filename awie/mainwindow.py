@@ -1,6 +1,5 @@
-from PyQt5.QtCore import Qt, QDir
-from PyQt5.QtGui import QImage, QPixmap
-from PyQt5.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QTabWidget
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow
 
 from awie.canvas import Canvas
 from awie.toolbar import ToolBar
@@ -20,4 +19,4 @@ class MainWindow(QMainWindow):
 
         self.setDockOptions(QMainWindow.AllowNestedDocks | QMainWindow.AllowTabbedDocks)
 
-        # self.setCentralWidget(self.canvasTabs)
+        self.setCentralWidget(Canvas())

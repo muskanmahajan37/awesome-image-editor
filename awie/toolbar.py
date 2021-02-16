@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QObject, Qt
 from PyQt5.QtGui import QIcon, QKeySequence
-from PyQt5.QtWidgets import QAction, QDockWidget, QActionGroup, QLabel, QToolBar
+from PyQt5.QtWidgets import QAction, QActionGroup, QToolBar
 
 
 class Tool(QAction):
