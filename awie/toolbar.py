@@ -1,47 +1,37 @@
 from PyQt5.QtCore import QObject, Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QAction, QDockWidget, QActionGroup, QLabel
+from PyQt5.QtGui import QIcon, QKeySequence
+from PyQt5.QtWidgets import QAction, QDockWidget, QActionGroup, QLabel, QToolBar
 
 
-class Tool(QObject):
+class Tool(QAction):
+    def __init__(self, iconPath="", tip="", checked=False, shortcut=QKeySequence(), text="", parent=None, *args, **kwargs):
+        super().__init__()
+
+        self.setCheckable(True)
+        self.setIcon(QIcon(iconPath))
+        self.setStatusTip(tip)
+        self.setChecked(checked)
+        self.setShortcut(shortcut)
+        self.setText(text)
+        self.setParent(parent)
+
+
+tools = [Tool("./icons/move.png", "Move selected", True)]
+
+
+
+class ToolBar(QToolBar):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.action = QAction()
-        self.action.setCheckable(True)
-
-
-class PanTool(Tool):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.action.setIcon(QIcon("./icons/pan.png"))
-        self.action.setToolTip("Pan around the canvas")
-        self.action.setChecked(True)
-
-
-class SelectTool(Tool):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.action.setIcon(QIcon("./icons/pan.png"))
-        self.action.setToolTip("Pan around the canvas")
-
-
-class ToolBar(QDockWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.setWindowTitle("Main Toolbar")
-        self.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
-        self.setFeatures(QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable)
-        self.setWindowFlags(Qt.Window | Qt.FramelessWindowHint)
+        self.setAllowedAreas(Qt.LeftToolBarArea | Qt.RightToolBarArea)
+        # Force Vertical Orientation
+        self.orientationChanged.connect(lambda _: self.setOrientation(Qt.Vertical))
+        self.setContextMenuPolicy(Qt.PreventContextMenu)
+        self.setStyleSheet("QToolBar { border: 0px }")
 
         self.actGroup = QActionGroup(self)
-        self.actGroup.addAction(PanTool().action)
+        self.actGroup.addAction(tools[0])
 
         self.addActions(self.actGroup.actions())
 
-    # def appendAction(self, action):
-    #     self.actGroup.addAction(action)
-    #     self.addAction(action)
