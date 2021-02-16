@@ -8,4 +8,3 @@ def main():
     window = MainWindow()
     window.showMaximized()
     return app.exec_()
-    
