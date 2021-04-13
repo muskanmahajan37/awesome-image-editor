@@ -2,10 +2,12 @@ def main():
     from PyQt5.QtGui import QPalette, QColor, QIcon
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtCore import Qt
-    import ctypes
+    import platform
 
-    appid = 'iyadahmed.awesome.imageeditor.1'
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
+    if platform.system() == 'Windows':
+        import ctypes
+        appid = 'iyadahmed.awesome.imageeditor.1'
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
     app = QApplication([])
     app.setWindowIcon(QIcon("./icons/app.png"))

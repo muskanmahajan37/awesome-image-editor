@@ -19,4 +19,5 @@ class MainWindow(QMainWindow):
 
         self.setDockOptions(QMainWindow.AllowNestedDocks | QMainWindow.AllowTabbedDocks)
 
-        self.setCentralWidget(Canvas())
+        cvs = Canvas()
+        self.setCentralWidget(cvs)
